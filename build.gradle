@@ -58,7 +58,7 @@ checkstyle {
 
 sonarqube {
     properties {
-        property "sonar.projectKey", "applibgroup_packageHunter"
+        property "sonar.projectKey", "applibgroup_packagehunter"
         property "sonar.organization", "applibgroup"
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.sources", "entry,packagehunterlib"
