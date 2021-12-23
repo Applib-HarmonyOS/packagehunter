@@ -1,0 +1,65 @@
+{
+  "app": {
+    "bundleName": "org.applibgroup.codelabs.myapplication",
+    "vendor": "applibgroup",
+    "version": {
+      "code": 1000000,
+      "name": "1.0.0"
+    }
+  },
+  "deviceConfig": {},
+  "module": {
+    "package": "org.applibgroup.codelabs.myapplication",
+    "name": ".MyApplication",
+    "mainAbility": "org.applibgroup.codelabs.myapplication.MainAbility",
+    "deviceType": [
+      "phone",
+      "tablet",
+      "tv"
+    ],
+    "distro": {
+      "deliveryWithInstall": true,
+      "moduleName": "entry",
+      "moduleType": "entry",
+      "installationFree": false
+    },
+    "reqPermissions": [
+      {
+        "name": "ohos.permission.GET_BUNDLE_INFO"
+      }
+    ],
+    "abilities": [
+      {
+        "skills": [
+          {
+            "entities": [
+              "entity.system.home"
+            ],
+            "actions": [
+              "action.system.home"
+            ]
+          }
+        ],
+        "orientation": "unspecified",
+        "name": "org.applibgroup.codelabs.myapplication.MainAbility",
+        "icon": "$media:icon",
+        "description": "$string:mainability_description",
+        "label": "$string:entry_MainAbility",
+        "type": "page",
+        "launchType": "standard"
+      },
+      {
+        "orientation": "unspecified",
+        "name": "org.applibgroup.codelabs.myapplication.DetailAbility",
+        "icon": "$media:icon",
+        "description": "$string:detailability_description",
+        "label": "$string:entry_DetailAbility",
+        "type": "page",
+        "launchType": "standard"
+      }
+    ],
+    "distroFilter": {
+      "apiVersion": {}
+    }
+  }
+}
