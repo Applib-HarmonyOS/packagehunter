@@ -12,6 +12,8 @@ import ohos.bundle.IBundleManager;
 import ohos.security.SystemPermission;
 import org.applibgroup.codelabs.myapplication.ResourceTable;
 import org.applibgroup.codelabs.myapplication.provider.PackageItemProvider;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,11 +30,17 @@ public class MainAbilitySlice extends AbilitySlice {
     private List<PkgInfo> pkgInfoList = new ArrayList<>();
     private ListContainer listContainer;
     private PackageItemProvider packageItemProvider;
+    private Random randomInt;
 
     @Override
     public void onStart(Intent intent) {
         super.onStart(intent);
         super.setUIContent(ResourceTable.Layout_ability_main);
+        try {
+            randomInt = SecureRandom.getInstanceStrong();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -65,15 +73,14 @@ public class MainAbilitySlice extends AbilitySlice {
      * Create list of dummy packages.
      */
     private void preparePackageList() {
-        Random random = new Random();
         for (int count = 0; count < 8; count++) {
             PkgInfo pkgInfo = new PkgInfo();
             pkgInfo.setAppName("Demo App " + count);
             pkgInfo.setPackageName("org.applibgroup.demo.sampleapp" + count);
-            pkgInfo.setVersionCode(random.nextInt(100));
+            pkgInfo.setVersionCode(this.randomInt.nextInt());
             pkgInfo.setVersionName("1.0." + count);
             pkgInfo.setFirstInstallTime(TimeUnit.MILLISECONDS.toSeconds(
-                    System.currentTimeMillis() - random.nextInt(100000)));
+                    System.currentTimeMillis() - this.randomInt.nextInt(100000)));
             pkgInfo.setLastUpdateTime(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
             pkgInfoList.add(pkgInfo);
         }

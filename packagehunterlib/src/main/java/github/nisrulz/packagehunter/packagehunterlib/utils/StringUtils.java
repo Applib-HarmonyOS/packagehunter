@@ -4,7 +4,6 @@ package github.nisrulz.packagehunter.packagehunterlib.utils;
  * Utility class for string functions.
  */
 public class StringUtils {
-    private static final String TAG_LOG = "packagehunter";
 
     private StringUtils() {
         /* Do nothing */

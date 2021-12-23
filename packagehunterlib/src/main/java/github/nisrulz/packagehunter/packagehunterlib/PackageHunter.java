@@ -19,7 +19,6 @@ package github.nisrulz.packagehunter.packagehunterlib;
 
 import github.nisrulz.packagehunter.packagehunterlib.utils.LogUtils;
 import github.nisrulz.packagehunter.packagehunterlib.utils.StringUtils;
-import ohos.agp.components.element.PixelMapElement;
 import ohos.app.Context;
 import ohos.bundle.AbilityInfo;
 import ohos.bundle.BundleInfo;
@@ -78,7 +77,6 @@ public class PackageHunter {
      * @return the pixel map
      */
     public static Optional<PixelMap> getPixelMap(Context context, int id) {
-        //LogUtils.info(TAG, "Entering getPixelMap");
         String path = getPathById(context, id);
         if (StringUtils.isEmpty(path)) {
             LogUtils.e(TAG, "getPixelMap -> get empty path");
@@ -130,19 +128,6 @@ public class PackageHunter {
     }
 
     /**
-     * get the Pixel Map Element.
-     *
-     * @param context the context
-     * @param resId   the res id
-     * @return the Pixel Map Element
-     */
-    public static PixelMapElement getPixelMapDrawable(Context context, int resId) {
-        // LogUtils.info(TAG, "Entering getPixelMapDrawable");
-        Optional<PixelMap> optional = getPixelMap(context, resId);
-        return optional.map(PixelMapElement::new).orElse(null);
-    }
-
-    /**
      * Returns Abilities for the specified package.
      *
      * @param packageName package name
@@ -157,7 +142,7 @@ public class PackageHunter {
             }
             return data.toArray(new String[0]);
         } else {
-            return null;
+            return new String[0];
         }
     }
 
@@ -186,7 +171,6 @@ public class PackageHunter {
                 iconByteArray = readByteFromFile(iconPath);
             }
         } catch (IOException e) {
-            e.printStackTrace();
             LogUtils.e(TAG, "getIconForPkg # exception during # readByteFromFile = " + e.getMessage());
         }
         if (null != iconByteArray) {
@@ -219,6 +203,7 @@ public class PackageHunter {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] bytes = new byte[0];
         int len;
+
         try {
             fileInputStream = new FileInputStream(new File(filePath));
             len = fileInputStream.read(cacheBytes);
@@ -247,7 +232,7 @@ public class PackageHunter {
      *
      * @return array of PkgInfo type
      */
-    public ArrayList<PkgInfo> getInstalledPackages() {
+    public List<PkgInfo> getInstalledPackages() {
         return getAllPackagesInfo(PACKAGES);
     }
 
@@ -273,7 +258,7 @@ public class PackageHunter {
         if (bundleInfo.reqPermissions != null) {
             return bundleInfo.reqPermissions.toArray(new String[0]);
         } else {
-            return null;
+            return new String[0];
         }
     }
 
@@ -293,7 +278,7 @@ public class PackageHunter {
             }
             return data.toArray(new String[0]);
         } else {
-            return null;
+            return new String[0];
         }
     }
 
@@ -329,10 +314,7 @@ public class PackageHunter {
         String queryLowercase = query.toLowerCase();
         ArrayList<PkgInfo> pkgInfoArrayList = new ArrayList<>();
         ArrayList<PkgInfo> installedPackagesList = getAllPackagesInfo(flag);
-
-        for (int i = 0; i < installedPackagesList.size(); i++) {
-            PkgInfo pkgInfo = installedPackagesList.get(i);
-
+        for (PkgInfo pkgInfo : installedPackagesList) {
             switch (flag) {
                 case APPLICATIONS:
                     String appname = pkgInfo.getAppName();
@@ -348,38 +330,17 @@ public class PackageHunter {
                     break;
                 case PERMISSIONS: {
                     String[] permissions = getPermissionForPkg(pkgInfo.getPackageName());
-                    if (permissions != null) {
-                        for (String permission : permissions) {
-                            if (permission.toLowerCase().contains(queryLowercase)) {
-                                pkgInfoArrayList.add(pkgInfo);
-                                break;
-                            }
-                        }
-                    }
+                    filter(permissions, queryLowercase, pkgInfoArrayList, pkgInfo);
                     break;
                 }
                 case SERVICES: {
                     String[] services = getServicesForPkg(pkgInfo.getPackageName());
-                    if (services != null) {
-                        for (String service : services) {
-                            if (service.toLowerCase().contains(queryLowercase)) {
-                                pkgInfoArrayList.add(pkgInfo);
-                                break;
-                            }
-                        }
-                    }
+                    filter( services, queryLowercase, pkgInfoArrayList, pkgInfo);
                     break;
                 }
                 case ACTIVITIES: {
-                    String[] activities = getAbilitiesForPkg(pkgInfo.getPackageName());
-                    if (activities != null) {
-                        for (String activity : activities) {
-                            if (activity.toLowerCase().contains(queryLowercase)) {
-                                pkgInfoArrayList.add(pkgInfo);
-                                break;
-                            }
-                        }
-                    }
+                    String[] abilities = getAbilitiesForPkg(pkgInfo.getPackageName());
+                    filter( abilities, queryLowercase, pkgInfoArrayList, pkgInfo);
                     break;
                 }
                 default: {
@@ -391,13 +352,23 @@ public class PackageHunter {
                 }
             }
         }
-
         return pkgInfoArrayList;
+    }
+
+    private void filter(String [] arrayData, String queryLowercase,
+                                  ArrayList<PkgInfo> pkgInfoArrayList, PkgInfo pkgInfo) {
+        if (arrayData != null) {
+            for (String ability : arrayData) {
+                if (ability.toLowerCase().contains(queryLowercase)) {
+                    pkgInfoArrayList.add(pkgInfo);
+                    break;
+                }
+            }
+        }
     }
 
     private ArrayList<PkgInfo> getAllPackagesInfo(int flag) {
         ArrayList<PkgInfo> pkgInfoArrayList = new ArrayList<>();
-
         List<BundleInfo> installedPackagesList = null;
         try {
             switch (flag) {
@@ -420,7 +391,6 @@ public class PackageHunter {
             }
 
         } catch (RemoteException e) {
-            e.printStackTrace();
             LogUtils.debug(TAG, e.getMessage());
         }
         if (null != installedPackagesList) {
@@ -428,7 +398,7 @@ public class PackageHunter {
             for (BundleInfo bundleInfo : installedPackagesList) {
                 LogUtils.info(TAG, "bundleInfo = " + bundleInfo.toString());
                 if (!bundleInfo.getAppInfo().getName().contains("ohos.")) { //ignore ohos packages
-                    pkgInfoArrayList.add(getPkgInfoModel(bundleInfo, flag));
+                    pkgInfoArrayList.add(getPkgInfoModel(bundleInfo));
                 }
             }
         }
@@ -438,8 +408,7 @@ public class PackageHunter {
     private List<BundleInfo> getAllServices() throws RemoteException {
         List<BundleInfo> allInstalledBundleInfoList = packageManager.getBundleInfos(0x00000000);
         List<BundleInfo> servicesList = new ArrayList<>();
-        for (int i = 0; i < allInstalledBundleInfoList.size(); i++) {
-            BundleInfo bundleInfo = allInstalledBundleInfoList.get(i);
+        for (BundleInfo bundleInfo : allInstalledBundleInfoList) {
             for (int count = 0; count < bundleInfo.getAbilityInfos().size(); count++) {
                 AbilityInfo abilityInfo = bundleInfo.getAbilityInfos().get(count);
                 AbilityInfo.AbilityType abilityType = abilityInfo.getType();
@@ -492,7 +461,7 @@ public class PackageHunter {
         }
     }
 
-    private PkgInfo getPkgInfoModel(BundleInfo p, int flag) {
+    private PkgInfo getPkgInfoModel(BundleInfo p) {
         // Always available
         PkgInfo pkgInfo = new PkgInfo();
         if (p != null) {
