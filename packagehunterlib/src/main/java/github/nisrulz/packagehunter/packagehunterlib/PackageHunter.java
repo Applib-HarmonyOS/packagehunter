@@ -310,7 +310,7 @@ public class PackageHunter {
      * @param query search text
      * @param flag type of package
      */
-    public ArrayList<PkgInfo> searchInList(String query, int flag) {
+    public List<PkgInfo> searchInList(String query, int flag) {
         String queryLowercase = query.toLowerCase();
         ArrayList<PkgInfo> pkgInfoArrayList = new ArrayList<>();
         ArrayList<PkgInfo> installedPackagesList = getAllPackagesInfo(flag);
@@ -356,7 +356,7 @@ public class PackageHunter {
     }
 
     private void filter(String [] arrayData, String queryLowercase,
-                                  ArrayList<PkgInfo> pkgInfoArrayList, PkgInfo pkgInfo) {
+                        ArrayList<PkgInfo> pkgInfoArrayList, PkgInfo pkgInfo) {
         if (arrayData != null) {
             for (String ability : arrayData) {
                 if (ability.toLowerCase().contains(queryLowercase)) {
@@ -406,20 +406,17 @@ public class PackageHunter {
     }
 
     private List<BundleInfo> getAllServices() throws RemoteException {
-        List<BundleInfo> allInstalledBundleInfoList = packageManager.getBundleInfos(0x00000000);
         List<BundleInfo> servicesList = new ArrayList<>();
-        for (BundleInfo bundleInfo : allInstalledBundleInfoList) {
-            for (int count = 0; count < bundleInfo.getAbilityInfos().size(); count++) {
-                AbilityInfo abilityInfo = bundleInfo.getAbilityInfos().get(count);
-                AbilityInfo.AbilityType abilityType = abilityInfo.getType();
+        for (BundleInfo bundleInfo : packageManager.getBundleInfos(0x00000000)) {
+            List<AbilityInfo> abilityInfos = bundleInfo.getAbilityInfos();
+            for (int count = 0; count < abilityInfos.size(); count++) {
+                AbilityInfo.AbilityType abilityType = abilityInfos.get(count).getType();
                 // this package has single ability and it is of SERVICE type
                 if (bundleInfo.getAbilityInfos().size() == 1
                         && (abilityType == AbilityInfo.AbilityType.SERVICE)) {
                     servicesList.add(bundleInfo);
                     break;
                 } else {
-                    // this package has multiple abilities and we have to iterate all
-                    // and keep checking for the ability type for each ability
                     // if any ability if of non service type found, this cannot be a service app
                     if (abilityType != AbilityInfo.AbilityType.SERVICE) {
                         LogUtils.debug(TAG, "getAllServices # Found non SERVICE Ability, so not a SERVICE app!");

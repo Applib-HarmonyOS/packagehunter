@@ -10,6 +10,7 @@ import ohos.agp.window.dialog.ToastDialog;
 import ohos.app.Context;
 import ohos.bundle.IBundleManager;
 import ohos.security.SystemPermission;
+import org.applibgroup.codelabs.myapplication.MainAbility;
 import org.applibgroup.codelabs.myapplication.ResourceTable;
 import org.applibgroup.codelabs.myapplication.provider.PackageItemProvider;
 import java.security.NoSuchAlgorithmException;
@@ -19,13 +20,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import static ohos.data.search.schema.PhotoItem.TAG;
+
 
 /**
  * Main Ability for the app.
  */
 public class MainAbilitySlice extends AbilitySlice {
 
+    private final static String TAG = MainAbilitySlice.class.getSimpleName();
     private PackageHunter packageHunter;
     private List<PkgInfo> pkgInfoList = new ArrayList<>();
     private ListContainer listContainer;
@@ -39,7 +41,7 @@ public class MainAbilitySlice extends AbilitySlice {
         try {
             randomInt = SecureRandom.getInstanceStrong();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            LogUtils.e(TAG, e.getMessage());
         }
     }
 
@@ -95,7 +97,8 @@ public class MainAbilitySlice extends AbilitySlice {
     private void findInstalledPackages() {
         pkgInfoList = packageHunter.getInstalledPackages();
         for (int count = 0; count < pkgInfoList.size(); count++) {
-            LogUtils.info(TAG, "PkgInfo Details [ " + count + " ] = " + pkgInfoList.get(count).toString());
+            LogUtils.info(TAG, "PkgInfo Details [ " + count + " ] = "
+                    + pkgInfoList.get(count).toString());
         }
     }
 
