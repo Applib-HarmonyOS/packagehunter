@@ -1,1 +1,1 @@
-include ':entry', ':packagehunterlib',':permissions'
+include ':entry', ':packagehunterlib'
