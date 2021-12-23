@@ -1,7 +1,7 @@
 package github.nisrulz.packagehunter.packagehunterlib.utils;
 
 /**
- * Utility class for string functions
+ * Utility class for string functions.
  */
 public class StringUtils {
     private static final String TAG_LOG = "packagehunter";
@@ -11,7 +11,7 @@ public class StringUtils {
     }
 
     /**
-     * check if the input is empty
+     * check if the input is empty.
      *
      * @param input the input string
      * @return the input string is empty

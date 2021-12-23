@@ -9,7 +9,6 @@ import ohos.agp.components.Image;
 import ohos.agp.components.Text;
 import ohos.media.image.PixelMap;
 import org.applibgroup.codelabs.myapplication.ResourceTable;
-
 import java.util.Locale;
 
 /**
@@ -45,23 +44,24 @@ public class DetailAbilitySlice extends AbilitySlice {
 
     private void populateDataUsingPackageName(String packageName) {
         PackageHunter packageHunter = new PackageHunter(this);
-        String version = packageHunter.getVersionForPkg(packageName);
-        String versionCode = packageHunter.getVersionCodeForPkg(packageName);
-        String appName = packageHunter.getAppNameForPkg(packageName);
-        long firstInstallTime = packageHunter.getFirstInstallTimeForPkg(packageName);
-        long lastUpdateTime = packageHunter.getLastUpdatedTimeForPkg(packageName);
+        final String version = packageHunter.getVersionForPkg(packageName);
+        final String versionCode = packageHunter.getVersionCodeForPkg(packageName);
+        final String appName = packageHunter.getAppNameForPkg(packageName);
+        final long firstInstallTime = packageHunter.getFirstInstallTimeForPkg(packageName);
+        final long lastUpdateTime = packageHunter.getLastUpdatedTimeForPkg(packageName);
         PixelMap icon = packageHunter.getIconForPkg(packageName);
-        if (null != icon)
+        if (null != icon) {
             imgIcon.setPixelMap(icon);
+        }
         txtAppName.setName(appName);
         txtVersion.setText("Version : " + version);
         txtVersionCode.setText("Version Code : " + versionCode);
         txtPkgName.setText(pkgInfo.getPackageName());
         txtFirstInstall.setText("First Install Time : " + getFormattedUpTime(firstInstallTime));
         txtLastUpdated.setText("Last Update Time : " + getFormattedUpTime(lastUpdateTime));
-//        String[] permissions = packageHunter.getPermissionForPkg(packageName);
-//        String[] activities = packageHunter.getAbilitiesForPkg(packageName);
-//        String[] services = packageHunter.getServicesForPkg(packageName);
+        // String[] permissions = packageHunter.getPermissionForPkg(packageName);
+        // String[] activities = packageHunter.getAbilitiesForPkg(packageName);
+        // String[] services = packageHunter.getServicesForPkg(packageName);
     }
 
     private void populateDataFromIntentObject() {

@@ -3,6 +3,9 @@ package github.nisrulz.packagehunter.packagehunterlib.utils;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
 
+/**
+ * Util library for logging.
+ */
 public class LogUtils {
     private static final String TAG_LOG = "packagehunter";
 
@@ -17,7 +20,7 @@ public class LogUtils {
     }
 
     /**
-     * Print debug log
+     * Print debug log.
      *
      * @param tag log tag
      * @param msg log message
@@ -27,7 +30,7 @@ public class LogUtils {
     }
 
     /**
-     * Print info log
+     * Print info log.
      *
      * @param tag log tag
      * @param msg log message
@@ -37,7 +40,7 @@ public class LogUtils {
     }
 
     /**
-     * Print warn log
+     * Print warn log.
      *
      * @param tag log tag
      * @param msg log message
@@ -47,7 +50,7 @@ public class LogUtils {
     }
 
     /**
-     * Print error log
+     * Print error log.
      *
      * @param tag log tag
      * @param msg log message

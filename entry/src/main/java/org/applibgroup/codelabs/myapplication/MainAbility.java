@@ -7,11 +7,12 @@ import ohos.agp.window.dialog.ToastDialog;
 import ohos.app.Context;
 import ohos.bundle.IBundleManager;
 import org.applibgroup.codelabs.myapplication.slice.MainAbilitySlice;
-
 import java.util.Arrays;
-
 import static ohos.data.search.schema.PhotoItem.TAG;
 
+/**
+ * Main Ability for the app.
+ */
 public class MainAbility extends Ability {
     @Override
     public void onStart(Intent intent) {

@@ -32,10 +32,13 @@ public class PkgInfo implements Sequenceable {
 
     private String packageName;
 
-    private int versionCode = 0;
+    private int versionCode;
 
     private String versionName;
 
+    /**
+     * Constructor.
+     */
     public PkgInfo() {
         appName = "";
         versionName = "0.0";
@@ -44,6 +47,12 @@ public class PkgInfo implements Sequenceable {
         lastUpdateTime = 0;
     }
 
+    /**
+     * unmarshalling values.
+     *
+     * @param in Parcel input
+     * @return true or false
+     */
     public boolean unmarshalling(Parcel in) {
         appName = in.readString();
         packageName = in.readString();
@@ -80,7 +89,9 @@ public class PkgInfo implements Sequenceable {
         this.appName = appName;
     }
 
-    public long getFirstInstallTime() { return firstInstallTime; }
+    public long getFirstInstallTime() {
+        return firstInstallTime;
+    }
 
     public void setFirstInstallTime(long firstInstallTime) {
         this.firstInstallTime = firstInstallTime;

@@ -19,6 +19,9 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import static ohos.data.search.schema.PhotoItem.TAG;
 
+/**
+ * Main Ability for the app.
+ */
 public class MainAbilitySlice extends AbilitySlice {
 
     private PackageHunter packageHunter;
@@ -90,7 +93,7 @@ public class MainAbilitySlice extends AbilitySlice {
     }
 
     /**
-     * method to request permissions
+     * method to request permissions.
      * @param requestCode request code to be passed
      */
     private void requestPermission(int requestCode) {
