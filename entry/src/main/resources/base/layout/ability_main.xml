@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:orientation="vertical">
+
+    <Text
+        ohos:id="$+id:text"
+        ohos:height="match_content"
+        ohos:width="match_content"
+        ohos:background_element="$graphic:background_ability_main"
+        ohos:bottom_padding="30fp"
+        ohos:clickable="true"
+        ohos:focus_border_width="5px"
+        ohos:layout_alignment="horizontal_center"
+        ohos:text="Check Permissions"
+        ohos:text_size="20vp"
+        ohos:top_margin="20vp"
+        />
+
+    <Button
+        ohos:id="$+id:text_pkg_hunter"
+        ohos:height="match_content"
+        ohos:width="300fp"
+        ohos:background_element="$graphic:background_ability_main_button"
+        ohos:clickable="true"
+        ohos:layout_alignment="horizontal_center"
+        ohos:padding="20px"
+        ohos:text="Package Hunter"
+        ohos:text_size="30vp"/>
+
+    <DirectionalLayout
+        ohos:height="match_parent"
+        ohos:width="match_parent">
+
+        <Component
+            ohos:height="2vp"
+            ohos:width="match_parent"
+            ohos:background_element="$graphic:background_ability_main_button"
+            ohos:bottom_margin="20vp"
+            ohos:top_margin="20vp">
+
+        </Component>
+
+        <Text
+            ohos:id="$+id:text2"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:background_element="$graphic:background_ability_main"
+            ohos:bottom_padding="20fp"
+            ohos:clickable="true"
+            ohos:focus_border_width="5px"
+            ohos:layout_alignment="left"
+            ohos:left_margin="20vp"
+            ohos:text="List of Packages"
+            ohos:text_size="20vp"
+            ohos:text_weight="500"
+            />
+
+        <ListContainer
+            ohos:id="$+id:list_package"
+            ohos:height="match_parent"
+            ohos:width="match_parent"
+            ohos:background_element="$graphic:background_ability_main_button">
+
+        </ListContainer>
+    </DirectionalLayout>
+
+</DirectionalLayout>

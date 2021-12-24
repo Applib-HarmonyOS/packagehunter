@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:orientation="vertical"
+    ohos:padding="20vp">
+
+    <Image
+        ohos:id="$+id:imgvw_icn"
+        ohos:height="80vp"
+        ohos:width="80vp"
+        ohos:image_src="$media:icon"
+        ohos:layout_alignment="horizontal_center"
+        ohos:scale_mode="center"/>
+
+    <DirectionalLayout
+        ohos:height="match_content"
+        ohos:width="match_parent"
+        ohos:orientation="vertical">
+
+        <Text
+            ohos:id="$+id:txtvw_appname"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:text="App Name"
+            ohos:text_size="15vp"
+            ohos:top_margin="6vp"/>
+
+        <Text
+            ohos:id="$+id:txtvw_pkgname"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:text="Package Name"
+            ohos:text_size="15vp"
+            ohos:top_margin="6vp"/>
+
+        <Text
+            ohos:id="$+id:txtvw_vname"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:text="0.0.0"
+            ohos:text_size="15vp"
+            ohos:top_margin="6vp"/>
+
+        <Text
+            ohos:id="$+id:txtvw_vc"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:text="1000000"
+            ohos:text_size="15vp"
+            ohos:top_margin="6vp"/>
+
+        <Text
+            ohos:id="$+id:txtvw_firsttime"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:text="4352345325"
+            ohos:text_size="15vp"
+            ohos:top_margin="6vp"/>
+
+        <Text
+            ohos:id="$+id:txtvw_lastupdated"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:text="00000000"
+            ohos:text_size="15vp"
+            ohos:top_margin="6vp"/>
+    </DirectionalLayout>
+
+
+</DirectionalLayout>

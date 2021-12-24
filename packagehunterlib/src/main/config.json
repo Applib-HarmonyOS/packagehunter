@@ -1,0 +1,30 @@
+{
+  "app": {
+    "bundleName": "org.applibgroup.codelabs.myapplication",
+    "vendor": "applibgroup",
+    "version": {
+      "code": 1000000,
+      "name": "1.0.0"
+    }
+  },
+  "deviceConfig": {
+  },
+  "module": {
+    "reqPermissions": [
+      {
+        "name": "ohos.permission.GET_BUNDLE_INFO"
+      }
+    ],
+    "package": "github.nisrulz.packagehunter.packagehunterlib",
+    "deviceType": [
+      "phone",
+      "tablet",
+      "tv"
+    ],
+    "distro": {
+      "deliveryWithInstall": true,
+      "moduleName": "packagehunterlib",
+      "moduleType": "har"
+    }
+  }
+}
