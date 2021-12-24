@@ -194,14 +194,12 @@ public class PackageHunter {
      * @throws IOException for reading data from file
      */
     public byte[] readByteFromFile(String filePath) throws IOException {
-        FileInputStream fileInputStream = null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] bytes = new byte[0];
         byte[] cacheBytes = new byte[CACHE_SIZE];
         int len;
 
-        try {
-            fileInputStream = new FileInputStream(new File(filePath));
+        try (FileInputStream fileInputStream = new FileInputStream(new File(filePath))) {
             len = fileInputStream.read(cacheBytes);
             while (len != IO_END_LEN) {
                 baos.write(cacheBytes, 0, len);
@@ -211,9 +209,6 @@ public class PackageHunter {
         } catch (IOException e) {
             LogUtils.e(TAG, "obtain data file stream failed");
         } finally {
-            if (fileInputStream != null) {
-                fileInputStream.close();
-            }
             try {
                 baos.close();
             } catch (IOException e) {

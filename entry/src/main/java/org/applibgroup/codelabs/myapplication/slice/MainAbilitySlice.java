@@ -57,7 +57,7 @@ public class MainAbilitySlice extends AbilitySlice {
     private void initUiComponents() {
         listContainer = (ListContainer) findComponentById(ResourceTable.Id_list_package);
         findComponentById(ResourceTable.Id_text_pkg_hunter)
-                .setClickedListener(component -> populatePackageList()); // findInstalledPackages());
+                .setClickedListener(component -> populatePackageList());
     }
 
     private void initProvider() {
@@ -67,7 +67,11 @@ public class MainAbilitySlice extends AbilitySlice {
     }
 
     private void populatePackageList() {
-        preparePackageList();
+        try {
+            findInstalledPackages();
+        } catch(SecurityException securityException) {
+            preparePackageList();
+        }
         packageItemProvider.notifyDataChanged();
     }
 

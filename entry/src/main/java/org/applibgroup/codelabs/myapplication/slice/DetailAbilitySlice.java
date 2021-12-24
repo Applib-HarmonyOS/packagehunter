@@ -59,9 +59,6 @@ public class DetailAbilitySlice extends AbilitySlice {
         txtPkgName.setText(pkgInfo.getPackageName());
         txtFirstInstall.setText("First Install Time : " + getFormattedUpTime(firstInstallTime));
         txtLastUpdated.setText("Last Update Time : " + getFormattedUpTime(lastUpdateTime));
-        // String[] permissions = packageHunter.getPermissionForPkg(packageName);
-        // String[] activities = packageHunter.getAbilitiesForPkg(packageName);
-        // String[] services = packageHunter.getServicesForPkg(packageName);
     }
 
     private void populateDataFromIntentObject() {
