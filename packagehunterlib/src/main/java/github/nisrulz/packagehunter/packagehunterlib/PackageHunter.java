@@ -23,17 +23,14 @@ import ohos.app.Context;
 import ohos.bundle.AbilityInfo;
 import ohos.bundle.BundleInfo;
 import ohos.bundle.IBundleManager;
-import ohos.global.resource.WrongTypeException;
-import ohos.global.resource.RawFileEntry;
-import ohos.global.resource.NotExistException;
-import ohos.global.resource.Resource;
-import ohos.global.resource.ResourceManager;
+import ohos.global.resource.*;
 import ohos.media.image.ImageSource;
 import ohos.media.image.PixelMap;
 import ohos.media.image.common.PixelFormat;
 import ohos.media.image.common.Rect;
 import ohos.media.image.common.Size;
 import ohos.rpc.RemoteException;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -197,11 +194,10 @@ public class PackageHunter {
      * @throws IOException for reading data from file
      */
     public byte[] readByteFromFile(String filePath) throws IOException {
-        FileInputStream fileInputStream;
-        fileInputStream = null;
-        byte[] cacheBytes = new byte[CACHE_SIZE];
+        FileInputStream fileInputStream = null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] bytes = new byte[0];
+        byte[] cacheBytes = new byte[CACHE_SIZE];
         int len;
 
         try {
@@ -308,7 +304,7 @@ public class PackageHunter {
      * Returns List of PkgInfor as per search query.
      *
      * @param query search text
-     * @param flag type of package
+     * @param flag  type of package
      */
     public List<PkgInfo> searchInList(String query, int flag) {
         String queryLowercase = query.toLowerCase();
@@ -335,12 +331,12 @@ public class PackageHunter {
                 }
                 case SERVICES: {
                     String[] services = getServicesForPkg(pkgInfo.getPackageName());
-                    filter( services, queryLowercase, pkgInfoArrayList, pkgInfo);
+                    filter(services, queryLowercase, pkgInfoArrayList, pkgInfo);
                     break;
                 }
                 case ACTIVITIES: {
                     String[] abilities = getAbilitiesForPkg(pkgInfo.getPackageName());
-                    filter( abilities, queryLowercase, pkgInfoArrayList, pkgInfo);
+                    filter(abilities, queryLowercase, pkgInfoArrayList, pkgInfo);
                     break;
                 }
                 default: {
@@ -355,7 +351,7 @@ public class PackageHunter {
         return pkgInfoArrayList;
     }
 
-    private void filter(String [] arrayData, String queryLowercase,
+    private void filter(String[] arrayData, String queryLowercase,
                         ArrayList<PkgInfo> pkgInfoArrayList, PkgInfo pkgInfo) {
         if (arrayData != null) {
             for (String ability : arrayData) {
@@ -411,21 +407,14 @@ public class PackageHunter {
             List<AbilityInfo> abilityInfos = bundleInfo.getAbilityInfos();
             for (int count = 0; count < abilityInfos.size(); count++) {
                 AbilityInfo.AbilityType abilityType = abilityInfos.get(count).getType();
-                // this package has single ability and it is of SERVICE type
-                if (bundleInfo.getAbilityInfos().size() == 1
-                        && (abilityType == AbilityInfo.AbilityType.SERVICE)) {
-                    servicesList.add(bundleInfo);
-                    break;
+                // if any ability if of non service type found, this cannot be a service app
+                if (abilityType != AbilityInfo.AbilityType.SERVICE) {
+                    LogUtils.debug(TAG, "getAllServices # Found non SERVICE Ability, so not a SERVICE app!");
+                    break; //break this loop and start checking another package
                 } else {
-                    // if any ability if of non service type found, this cannot be a service app
-                    if (abilityType != AbilityInfo.AbilityType.SERVICE) {
-                        LogUtils.debug(TAG, "getAllServices # Found non SERVICE Ability, so not a SERVICE app!");
-                        break; //break this loop and start checking another package
-                    } else {
-                        // count will be equal to list size -1 only if all abilities are of Service types
-                        if (count == (bundleInfo.getAbilityInfos().size() - 1)) {
-                            servicesList.add(bundleInfo);
-                        }
+                    // count will be equal to list size -1 only if all abilities are of Service types
+                    if (count == (abilityInfos.size() - 1)) {
+                        servicesList.add(bundleInfo);
                     }
                 }
             }
